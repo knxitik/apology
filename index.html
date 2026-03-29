@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Keerthi | a little apology</title>
+  <!-- Montserrat Font: Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #ffdde1 0%, #f9c9d4 40%, #fbb6c2 100%);
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+      position: relative;
+    }
+
+    /* main container - perfect centering */
+    .container {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    /* ENVELOPE STYLES (initial) */
+    .envelope-wrapper {
+      cursor: pointer;
+      transition: transform 0.25s ease, filter 0.2s;
+      filter: drop-shadow(0 20px 25px -12px rgba(0, 0, 0, 0.2));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .envelope-wrapper:hover {
+      transform: scale(1.02);
+      filter: drop-shadow(0 25px 30px -12px rgba(0, 0, 0, 0.25));
+    }
+    .envelope {
+      background: #fffef7;
+      width: 280px;
+      height: 200px;
+      border-radius: 18px 18px 14px 14px;
+      position: relative;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      background: linear-gradient(135deg, #fff9f0, #fff5ea);
+      border: 1px solid rgba(255, 215, 200, 0.6);
+    }
+    /* envelope flap effect */
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: -28px;
+      left: 0;
+      width: 100%;
+      height: 32px;
+      background: #ffe6dc;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.02);
+    }
+    .heart-seal {
+      font-size: 2.4rem;
+      background: #ffe2d4;
+      width: 65px;
+      height: 65px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 2px rgba(255,140,120,0.2), 0 8px 12px rgba(0,0,0,0.05);
+      backdrop-filter: blur(1px);
+      background: #fff0ea;
+    }
+    .envelope-text {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: #e2a38f;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .click-hint {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #c27763;
+      letter-spacing: 0.3px;
+      background: rgba(255,250,240,0.6);
+      backdrop-filter: blur(4px);
+      width: fit-content;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* MAIN CARD (hidden initially) */
+    .main-card {
+      background: rgba(255, 252, 245, 0.97);
+      backdrop-filter: blur(2px);
+      border-radius: 42px;
+      padding: 2rem 2rem 2.2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 215, 190, 0.4);
+      width: 100%;
+      transition: opacity 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.35s ease;
+      opacity: 0;
+      transform: scale(0.97);
+      pointer-events: none;
+      text-align: center;
+    }
+    .main-card.visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /* tulip decoration - REDUCED! */
+    .tulip-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+    .title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #c45c46;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.3px;
+    }
+    .apology-message {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #4a2e28;
+      font-weight: 500;
+      background: #fff6f0;
+      padding: 1rem 1.2rem;
+      border-radius: 32px;
+      margin: 1.3rem 0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 6px 12px -8px rgba(0,0,0,0.05);
+    }
+    .message-text {
+      display: inline-block;
+    }
+    /* buttons container */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.8rem 0 1.2rem;
+    }
+    .btn {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: #f0e0d8;
+      color: #a5513e;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      letter-spacing: 0.3px;
+    }
+    .btn-forgive {
+      background: #ffd5c2;
+      color: #b1452e;
+      box-shadow: 0 6px 0 #c28772;
+      transform: translateY(-2px);
+    }
+    .btn-forgive:hover {
+      background: #ffc8b0;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 0 #b5674b;
+    }
+    .btn-no {
+      background: #e8d7cf;
+      color: #956351;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-no:hover {
+      background: #f0cbbc;
+      transform: scale(0.97);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    /* result container (image + message) */
+    .result-area {
+      margin-top: 1.8rem;
+      background: #fffaf5;
+      border-radius: 48px;
+      padding: 1rem;
+      transition: all 0.2s;
+      border: 1px solid #ffe2d4;
+    }
+    .cat-image {
+      max-width: 100%;
+      border-radius: 28px;
+      object-fit: cover;
+      width: 200px;
+      height: 200px;
+      display: block;
+      margin: 0 auto 0.9rem;
+      box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.15);
+      background: #f3e3db;
+    }
+    .response-message {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #bc6f5a;
+      padding: 0.5rem;
+      background: #fff1ea;
+      border-radius: 60px;
+      display: inline-block;
+      width: auto;
+      margin-top: 0.2rem;
+    }
+    .hidden {
+      display: none;
+    }
+    /* single tulip decor at bottom - subtle */
+    .single-tulip {
+      font-size: 1rem;
+      opacity: 0.6;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+    }
+    /* mobile responsive */
+    @media (max-width: 550px) {
+      .container {
+        padding: 0.5rem;
+      }
+      .main-card {
+        padding: 1.5rem;
+      }
+      .title {
+        font-size: 1.8rem;
+      }
+      .btn {
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      .cat-image {
+        width: 150px;
+        height: 150px;
+      }
+      .tulip-row {
+        font-size: 1.2rem;
+        gap: 0.3rem;
+      }
+    }
+    /* fade-in entry animation for envelope wrapper (subtle) */
+    @keyframes gentlePop {
+      0% { opacity: 0; transform: scale(0.96);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .envelope-wrapper {
+      animation: gentlePop 0.5s ease-out;
+    }
+    footer {
+      position: fixed;
+      bottom: 12px;
+      font-size: 0.7rem;
+      color: #c8937e;
+      font-weight: 400;
+      background: rgba(255,245,235,0.5);
+      border-radius: 50px;
+      padding: 4px 14px;
+      backdrop-filter: blur(3px);
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Envelope Section (initial visible) -->
+  <div id="envelopeContainer" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+    <div class="envelope-wrapper" id="envelopeClick">
+      <div class="envelope">
+        <div class="heart-seal">💌</div>
+        <div class="envelope-text">tap to open</div>
+      </div>
+    </div>
+    <div class="click-hint">🌸 something for you 🌸</div>
+  </div>
+
+  <!-- Main Card Content (hidden initially) -->
+  <div id="mainCard" class="main-card">
+    <!-- REDUCED TULIPS: only 2 tulips instead of 3 -->
+    <div class="tulip-row">
+      <span>🌷</span><span></span>
+    </div>
+    <!-- CHANGED: removed extra heart, now just 💗 -->
+    <div class="title">Hey Keerthi 💗</div>
+    <div class="apology-message">
+      <span class="message-text"> 
+Im really sorry for the times I unknowingly hurt you. You still say “it’s fineee” every time, but I know I shouldn’t take that for granted. You’ve always been the one who helps me calm down and stop overthinking, and honestly, you’re my comfort person.  
+
+I know things haven’t been the best these past few days, but I believe we’ll be okay and things will get better with time. And yeah… we should probably start focusing on studies too, exams are coming 😭  
+
+Just know that I really care about you 💗</span>
+    </div>
+    <div class="button-group">
+      <button class="btn btn-forgive" id="forgiveBtn">Forgive me?</button>
+      <button class="btn btn-no" id="noBtn">No 😤</button>
+    </div>
+    <!-- dynamic result area (cat image + response text) -->
+    <div id="resultArea" class="result-area hidden">
+      <img id="catImg" class="cat-image" src="" alt="cute cat">
+      <div id="responseMsg" class="response-message"></div>
+    </div>
+    <!-- single subtle tulip at bottom instead of multiple -->
+    <div class="single-tulip"></div>
+  </div>
+</div>
+<footer>with tulips & love</footer>
+
+<script>
+  (function() {
+    // ---- DOM elements ----
+    const envelopeWrapper = document.getElementById('envelopeContainer');
+    const mainCard = document.getElementById('mainCard');
+    const forgiveBtn = document.getElementById('forgiveBtn');
+    const noBtn = document.getElementById('noBtn');
+    const resultArea = document.getElementById('resultArea');
+    const catImage = document.getElementById('catImg');
+    const responseMsg = document.getElementById('responseMsg');
+
+    // Flag to prevent double reveal (smooth one-time)
+    let isRevealed = false;
+
+    // Function to reveal the main card with fade-in animation
+    function revealCard() {
+      if (isRevealed) return;
+      isRevealed = true;
+      
+      // fade-out envelope container gently then hide
+      envelopeWrapper.style.transition = 'opacity 0.35s ease, transform 0.3s';
+      envelopeWrapper.style.opacity = '0';
+      envelopeWrapper.style.transform = 'scale(0.94)';
+      
+      // after envelope disappears, show card
+      setTimeout(() => {
+        envelopeWrapper.style.display = 'none';
+        // make main card visible (add class to trigger animation)
+        mainCard.classList.add('visible');
+        // reset result area hidden until button press
+        if (resultArea.classList.contains('hidden') === false) {
+          resultArea.classList.add('hidden');
+        }
+      }, 320);
+    }
+
+    // ----- Helper to show result with specific image and message -----
+    function showResult(imageSrc, message) {
+      // ensure result area is visible and reset any previous content smoothly
+      resultArea.classList.remove('hidden');
+      // update image and message
+      catImage.src = imageSrc;
+      catImage.alt = imageSrc.includes('cute') ? 'cute cat with flowers' : 'angry cat';
+      responseMsg.textContent = message;
+      // small visual refresh: add a tiny bounce effect on image
+      catImage.style.transform = 'scale(1)';
+      catImage.style.transition = 'transform 0.2s';
+      setTimeout(() => { if(catImage) catImage.style.transform = ''; }, 150);
+      // set onerror fallback for safety (just in case images missing, show text emoji)
+      catImage.onerror = () => {
+        catImage.style.display = 'none';
+        const emojiFallback = document.createElement('div');
+        emojiFallback.textContent = imageSrc.includes('cute') ? '🐱🌸' : '😾🌪️';
+        emojiFallback.style.fontSize = '3rem';
+        emojiFallback.style.textAlign = 'center';
+        emojiFallback.style.padding = '1rem';
+        if (!catImage.parentNode.querySelector('.fallback-emoji')) {
+          emojiFallback.classList.add('fallback-emoji');
+          catImage.insertAdjacentElement('afterend', emojiFallback);
+        }
+      };
+      catImage.onload = () => {
+        // if fallback existed, remove
+        const fallbackDiv = catImage.parentNode.querySelector('.fallback-emoji');
+        if(fallbackDiv) fallbackDiv.remove();
+        catImage.style.display = 'block';
+      };
+    }
+
+    // ---- Forgive button action ----
+    forgiveBtn.addEventListener('click', () => {
+      // display cute cat image (cute.jpg) with message
+      showResult('cute.jpg', 'thankuuu i knew uh would forgive mee 💖');
+      // smooth scroll to result area
+      resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    // ---- No button action (angry cat) ----
+    noBtn.addEventListener('click', () => {
+      showResult('angry.jpg', 'pwease forgive me 😭');
+      resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // add a tiny playful shake to the No button
+      const noBtnElem = document.getElementById('noBtn');
+      if(noBtnElem) {
+        noBtnElem.style.transform = 'scale(0.96)';
+        setTimeout(() => { if(noBtnElem) noBtnElem.style.transform = ''; }, 150);
+      }
+    });
+
+    // ---- Envelope click event (entry interaction) ----
+    const envelopeClickZone = document.getElementById('envelopeClick');
+    if (envelopeClickZone) {
+      envelopeClickZone.addEventListener('click', revealCard);
+    }
+
+    // ---- ensure mainCard starts hidden and no pointer events ----
+    mainCard.classList.remove('visible');
+    // result area hidden
+    resultArea.classList.add('hidden');
+    
+    // Preload images to avoid flicker
+    const preloadCute = new Image();
+    preloadCute.src = 'cute.jpg';
+    const preloadAngry = new Image();
+    preloadAngry.src = 'angry.jpg';
+    
+    // extra smoothness: prevent double reveal during transition
+    let isAnimating = false;
+    const safeReveal = () => {
+      if(isRevealed || isAnimating) return;
+      isAnimating = true;
+      envelopeWrapper.style.transition = 'opacity 0.35s ease, transform 0.3s';
+      envelopeWrapper.style.opacity = '0';
+      envelopeWrapper.style.transform = 'scale(0.94)';
+      setTimeout(() => {
+        envelopeWrapper.style.display = 'none';
+        mainCard.classList.add('visible');
+        if (resultArea) resultArea.classList.add('hidden');
+        isAnimating = false;
+      }, 320);
+    };
+    
+    if(envelopeClickZone) {
+      envelopeClickZone.removeEventListener('click', revealCard);
+      envelopeClickZone.addEventListener('click', safeReveal);
+    }
+    
+    // update showResult with fallback cleanup
+    const originalShow = showResult;
+    window.showResult = function(imgSrc, msg) {
+      const prevFallback = document.querySelector('.fallback-emoji');
+      if(prevFallback) prevFallback.remove();
+      if(catImage) catImage.style.display = 'block';
+      resultArea.classList.remove('hidden');
+      catImage.src = imgSrc;
+      catImage.alt = imgSrc.includes('cute') ? 'cute cat with flowers' : 'angry cat';
+      responseMsg.textContent = msg;
+      catImage.onerror = () => {
+        catImage.style.display = 'none';
+        if(!catImage.parentNode.querySelector('.fallback-emoji')) {
+          const fallbackSpan = document.createElement('div');
+          fallbackSpan.className = 'fallback-emoji';
+          fallbackSpan.style.fontSize = '3rem';
+          fallbackSpan.style.textAlign = 'center';
+          fallbackSpan.style.padding = '0.6rem';
+          fallbackSpan.textContent = imgSrc.includes('cute') ? '🐱💐' : '😤😾';
+          catImage.insertAdjacentElement('afterend', fallbackSpan);
+        }
+      };
+      catImage.onload = () => {
+        const fallbackDiv = catImage.parentNode.querySelector('.fallback-emoji');
+        if(fallbackDiv) fallbackDiv.remove();
+        catImage.style.display = 'block';
+      };
+    };
+    
+    // rebind button events to use updated showResult
+    forgiveBtn.onclick = () => {
+      window.showResult('cute.jpg', 'thankuuu i knew uh would forgive mee 💖');
+      if(resultArea) resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    noBtn.onclick = () => {
+      window.showResult('angry.jpg', 'pwease forgive me 😭');
+      if(resultArea) resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const noEl = document.getElementById('noBtn');
+      if(noEl) { noEl.style.transform = 'scale(0.96)'; setTimeout(() => { if(noEl) noEl.style.transform = ''; }, 150); }
+    };
+    
+    // ensure result area starts hidden
+    if (resultArea) resultArea.classList.add('hidden');
+    
+    console.log("💗 Ready! Place cute.jpg and angry.jpg in the same folder for best experience.");
+  })();
+</script>
+</body>
+</html>
